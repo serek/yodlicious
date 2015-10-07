@@ -12,8 +12,7 @@ require File.dirname(__FILE__) + "/yodlicious/yodlee_api"
 
 class Faraday::Adapter::NetHttp
   def net_http_connection(env)
-    proxy = env[:request][:proxy]
-    if proxy.present?
+    if !(proxy = env[:request][:proxy]).empty?
       if proxy[:socks]
         # TCPSocket.socks_username = proxy[:user] if proxy[:user]
         # TCPSocket.socks_password = proxy[:password] if proxy[:password]
