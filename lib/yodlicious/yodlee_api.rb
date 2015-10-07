@@ -319,11 +319,11 @@ module Yodlicious
     def execute_api uri, params = {}
       debug_log "calling #{uri} with #{params}"
       ssl_opts = { verify: false }
-      connection = Faraday.new(url: base_url, ssl: ssl_opts, request: { proxy: proxy_opts }) do
+      connection = Faraday.new(url: base_url, ssl: ssl_opts, request: { proxy: proxy_opts }) do |faraday|
         faraday.adapter :net_http
       end
 
-      response = connection.post("#{base_url}#{uri}", params)
+      response = connection.post("#{base_url}#{uri}", params.to_query)
       debug_log "response=#{response.status} success?=#{response.success?} body=#{response.body} "
 
       case response.status
